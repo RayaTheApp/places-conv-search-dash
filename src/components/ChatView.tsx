@@ -778,8 +778,12 @@ export function ChatView({
           </TabsContent>
 
           <TabsContent value="trace" className="flex-1 overflow-hidden m-0">
-            {loadedConversation ? (
-              <TraceView conversation={loadedConversation} />
+            {loadedConversation?.evaluation ? (
+              <TraceView 
+                evaluation={loadedConversation.evaluation} 
+                conversationId={loadedConversation.id}
+                userId={loadedConversation.userId}
+              />
             ) : (
               <div className="flex items-center justify-center h-full">
                 <p className="font-['Inter',_sans-serif] text-[16px] leading-[22px]" style={{ color: 'rgba(23,23,23,0.4)' }}>

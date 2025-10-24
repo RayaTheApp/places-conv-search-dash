@@ -447,7 +447,7 @@ export function TraceView({ evaluation, conversationId, userId }: TraceViewProps
               </span>
             </div>
             <div className="font-['Inter',_sans-serif] text-[20px] leading-[24px] font-medium text-neutral-900">
-              {formatMs(evaluation.latencyMs)}
+              {evaluation.latencyMs !== undefined ? formatMs(evaluation.latencyMs) : 'N/A'}
             </div>
           </div>
 
@@ -467,10 +467,10 @@ export function TraceView({ evaluation, conversationId, userId }: TraceViewProps
                   </span>
                 </div>
                 <div className="font-['Inter',_sans-serif] text-[20px] leading-[24px] font-medium text-neutral-900">
-                  {evaluation.meta.tokensIn + evaluation.meta.tokensOut}
+                  {(evaluation.meta.tokensIn || 0) + (evaluation.meta.tokensOut || 0)}
                 </div>
                 <div className="font-['Inter',_sans-serif] text-[12px] leading-[16px]" style={{ color: 'rgba(23,23,23,0.6)' }}>
-                  {evaluation.meta.tokensIn} in · {evaluation.meta.tokensOut} out
+                  {evaluation.meta.tokensIn || 0} in · {evaluation.meta.tokensOut || 0} out
                 </div>
               </div>
 
@@ -487,7 +487,7 @@ export function TraceView({ evaluation, conversationId, userId }: TraceViewProps
                   </span>
                 </div>
                 <div className="font-['Inter',_sans-serif] text-[16px] leading-[20px] font-medium text-neutral-900">
-                  {evaluation.meta.model}
+                  {evaluation.meta.model || 'N/A'}
                 </div>
               </div>
             </>
@@ -510,12 +510,12 @@ export function TraceView({ evaluation, conversationId, userId }: TraceViewProps
                   Full Message Trace
                 </span>
                 <Badge variant="outline" className="font-['GT_Flexa_Mono',_monospace] text-[11px]">
-                  {evaluation.fullMessages.length}
+                  {evaluation.fullMessages?.length || 0}
                 </Badge>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4">
-              <MessageTraceSection fullMessages={evaluation.fullMessages} />
+              <MessageTraceSection fullMessages={evaluation.fullMessages || []} />
             </AccordionContent>
           </AccordionItem>
 
@@ -534,12 +534,12 @@ export function TraceView({ evaluation, conversationId, userId }: TraceViewProps
                   Tool Calls
                 </span>
                 <Badge variant="outline" className="font-['GT_Flexa_Mono',_monospace] text-[11px]">
-                  {evaluation.toolTrace.length}
+                  {evaluation.toolTrace?.length || 0}
                 </Badge>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4">
-              <ToolCallSection toolTrace={evaluation.toolTrace} />
+              <ToolCallSection toolTrace={evaluation.toolTrace || []} />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
